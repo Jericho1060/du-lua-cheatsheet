@@ -61,15 +61,15 @@ system.print(#array)         -- 4 (length)
 
 
 -- API functions
-table.foreach(t, function(row) ... end)       -- Iterates over the table
-table.setn(t, 10)                             -- Sets the length of the table
-table.insert(t, 21)                           -- append (--> t[#t+1] = 21)
-table.insert(t, 4, 99)                        -- insert (--> t[4] = 99)
-table.getn(t)                                 -- length (--> #t)
-table.concat(t, ", ")                         -- join (--> "a, b, c, d")
-table.sort(t)                                 -- sort (--> { "a", "b", "c", "d" }
-table.sort(t, function(a,b) return a > b end) -- sort (--> { "d", "c", "b", "a" }
-table.remove(t, 4)                            -- remove (--> "d")
+table.foreach(t, function(row) --[[do something for one row]] end) -- Iterates over the table
+table.setn(t, 10)                                                  -- Sets the length of the table
+table.insert(t, 21)                                                -- append (--> t[#t+1] = 21)
+table.insert(t, 4, 99)                                             -- insert (--> t[4] = 99)
+table.getn(t)                                                      -- length (--> #t)
+table.concat(t, ", ")                                              -- join (--> "a, b, c, d")
+table.sort(t)                                                      -- sort (--> { "a", "b", "c", "d" }
+table.sort(t, function(a,b) return a > b end)                      -- sort (--> { "d", "c", "b", "a" }
+table.remove(t, 4)                                                 -- remove (--> "d")
 ```
 
 ## Loops
