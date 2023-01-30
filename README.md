@@ -44,32 +44,56 @@ f{x=10, y=20}                  <->     f({x=10, y=20})
 type{}                         <->     type({})
 ```
 
-## Tables / arrays
+## constants
 
 ```lua
-t = {}
-t = { a = 1, b = 2 }
-t.a = function() ... end
+nil
+false
+true
+```
 
-t = { ["hello"] = 200 }
-t.hello
+## operators and thei metatable names
 
--- Remember, arrays are also tables
-array = { "a", "b", "c", "d" }
-system.print(array[2])       -- "b" (one-indexed)
-system.print(#array)         -- 4 (length)
+```lua
+-- Relational (binary)
+-- __eq  __lt  __gt  __le  __ge
+   ==    <     >     <=    >=
+~=   -- Not equal, just like !=
+
+-- Arithmetic (binary)
+-- __add  __sub  __muv  __div  __mod  __pow
+   +      -      *      /      %      ^
+
+-- Arithmetic (unary)
+-- __unm (unary minus)
+   -
+
+-- Logic (and/or)
+nil and false  --> nil
+false and nil  --> false
+0 and 20       --> 20
+10 and 20      --> 20
 
 
--- API functions
-table.foreach(t, function(row) --[[do something for one row]] end) -- Iterates over the table
-table.setn(t, 10)                                                  -- Sets the length of the table
-table.insert(t, 21)                                                -- append (--> t[#t+1] = 21)
-table.insert(t, 4, 99)                                             -- insert (--> t[4] = 99)
-table.getn(t)                                                      -- length (--> #t)
-table.concat(t, ", ")                                              -- join (--> "a, b, c, d")
-table.sort(t)                                                      -- sort (--> { "a", "b", "c", "d" }
-table.sort(t, function(a,b) return a > b end)                      -- sort (--> { "d", "c", "b", "a" }
-table.remove(t, 4)                                                 -- remove (--> "d")
+-- Length
+-- __len(array)
+#array
+
+
+-- Indexing
+-- __index(table, key)
+t[key]
+t.key
+
+-- __newindex(table, key, value)
+t[key]=value
+
+-- String concat
+-- __concat(left, right)
+"hello, "..name
+
+-- Call
+-- __call(func, ...)
 ```
 
 ## Loops
@@ -145,6 +169,34 @@ end
 doAction('write', "Shirley", "Abed")
 ```
 
+## Tables / arrays
+
+```lua
+t = {}
+t = { a = 1, b = 2 }
+t.a = function() ... end
+
+t = { ["hello"] = 200 }
+t.hello
+
+-- Remember, arrays are also tables
+array = { "a", "b", "c", "d" }
+system.print(array[2])       -- "b" (one-indexed)
+system.print(#array)         -- 4 (length)
+
+
+-- API functions
+table.foreach(t, function(row) --[[do something for one row]] end) -- Iterates over the table
+table.setn(t, 10)                                                  -- Sets the length of the table
+table.insert(t, 21)                                                -- append (--> t[#t+1] = 21)
+table.insert(t, 4, 99)                                             -- insert (--> t[4] = 99)
+table.getn(t)                                                      -- length (--> #t)
+table.concat(t, ", ")                                              -- join (--> "a, b, c, d")
+table.sort(t)                                                      -- sort (--> { "a", "b", "c", "d" }
+table.sort(t, function(a,b) return a > b end)                      -- sort (--> { "d", "c", "b", "a" }
+table.remove(t, 4)                                                 -- remove (--> "d")
+```
+
 ## Lookups
 
 ```lua
@@ -217,59 +269,7 @@ a:withdraw(200)    -- method call
 
 ```
 
-## constants
-
-```lua
-nil
-false
-true
-```
-
-## operators and thei metatable names
-
-```lua
--- Relational (binary)
--- __eq  __lt  __gt  __le  __ge
-   ==    <     >     <=    >=
-~=   -- Not equal, just like !=
-
--- Arithmetic (binary)
--- __add  __sub  __muv  __div  __mod  __pow
-   +      -      *      /      %      ^
-
--- Arithmetic (unary)
--- __unm (unary minus)
-   -
-
--- Logic (and/or)
-nil and false  --> nil
-false and nil  --> false
-0 and 20       --> 20
-10 and 20      --> 20
-
-
--- Length
--- __len(array)
-#array
-
-
--- Indexing
--- __index(table, key)
-t[key]
-t.key
-
--- __newindex(table, key, value)
-t[key]=value
-
--- String concat
--- __concat(left, right)
-"hello, "..name
-
--- Call
--- __call(func, ...)
-```
-
-## API Global Functions
+## Global Functions
 
 ```lua
 assert(x) -- Throws an error if x is false
@@ -291,7 +291,7 @@ tonumber("34") -- 34
 tonumber("8f", 16) -- 143
 ```
 
-## API: Strings
+## Strings
 
 ```lua
 'string'..'concatenation' -- "stringconcatenation"
